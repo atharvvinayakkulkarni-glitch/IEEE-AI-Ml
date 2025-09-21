@@ -367,7 +367,7 @@ fashion_mnist = NN(784, 160, 10, 0.03, 130)
 p = np.random.permutation(len(X))
 X, y = X[p], y[p]
 
-# Splitting the data into training, validation and testing in the ratio 70:20:10
+# Splitting the data into training, validation and testing in the ratio 70:20:1
 X_train, y_train = X[:int(0.7*len(X))], y[:int(0.7*len(X))]
 X_val, y_val = X[int(0.7*len(X)):int(0.9*len(X))], y[int(0.7*len(X)):int(0.9*len(X))]
 X_test, y_test = X[int(0.9*len(X)):], y[int(0.9*len(X)):]
