@@ -1,0 +1,63 @@
+[Q1] But we dont use it here why? Why is it an array of 10 elements?
+
+ ANS] We did not directly assign the label of the number to which the integer label int(f) is assigned to as it will make it very hard for the cross entropy loss to evaluate the how correct our model prediction is to the actual answer as it works on a vectorized function/array of elements with values from 0 to 1(probabilities) with 1 being the actual label to be assigned and 0 assigned to all others so that it can calculate our loss function efficiently and apply changes accordingly. For ex our output label is 3 and there are total 10 elements in output layer so the third element of array will be 1 and all others will be 0 and if our model predicts 0.8 on the 3rd index then the cross entropy loss can calculate how accurate our model is by calculating the loss.
+
+[Q2] Why convert to numpy array?
+ANS] NumPy has many functions which we can use very easily to without running any loops hence it is much better than python lists also data in numpy arrays can be easily trained on as mathematical functions are executed very quickly.
+
+[Q3] Why are we doing this and what does this type of slicing result in?
+ANS] Our X here is a numpy array of 4 dimension which contains all the images in the form [number of images, height, width, channel] for a MLP we need a two dimensional image of pixels so by such slicing we will remove the channel dimension.
+
+[Q4] Why are we reshaping the data?
+Ans] After slicing is done our X is a 3D array with [number of images, height, width] as we want to flatten it into a single layer of neurons we will multiply the height and width to get area and store it in X which now became a long vector containing all the pixels.
+ 
+[Q5] What is the learning rate?
+ANS] Learning rate is the factor by which decides my how fast the weights and biases will be nudged in order to give a more accurate prediction after each step in backpropagation. If lr is large weights will be changed drastically and model may fail and if lr is too small it will take multiple epochs to get the desired accuracy as weights will update slowly.
+
+[Q6] Why are the dimensions of the weights and biases the way they are?
+Ans] Weights are specific values given to each connection between one neuron to other in a MLP which decides how much importance is given to that connection according to the input given, Thus the more accurate the value of weight is of all connections the better will be the prediction of the model. As weight are designated for each connection separately to put it in a vectorized form for easier calculation we can consider the middle hidden neuron layer with the number of neurons being n_middle and the layer before that will have n_input number of neurons thus the dimension for the matrix containing all the weights will be of dimension W = n_middle X n_input(each connection is established by doing this) and the dimension of biases will be just n_middle X 1 as we will directly add the biases of the middle layer to each weight*neuron. 
+
+[Q7] What is broadcasting and why do we need to broadcast the bias?
+ANS] In numpy arrays the user sometimes performs some type of matrix operation of two matrices having non similar dimensions in such a case broadcasting occurs in which the shorter array is expanded such that the operation can be carried out. We need to broadcast our current data as well as the dimension of the matrix containing weight*neuron is [no.of neurons in middle, batch size] while the biases have dimension [no.of neurons in middle, 1] thus broadcasting will expand the bias array without duplicating it and help in adding the biases.
+
+[Q8] What is np.random.randn? What's the shape of this matrix?
+ANS] np.random.randn is a numpy function to generate a random array of any given shape containing normalised values from 0 to 1. here we are using a 2D array of shape (middle neurons, input neurons).
+
+[Q9] What are activation functions and why do we need them?
+ANS] After doing all calculations our function is z = W.n + b which is a linear function which wont be enough to approximate for complex models and non linear patterns Thus our value z is given to a activation function such as sigmoid or Relu which introduce non linearity and helps in detecting patterns. For ex RELU function reduce all negatives to 0.
+
+[Q10] What is the softmax function and why do we need it? Read up on it
+Ans] SoftMax is an activation function that is primarily used for the output layer of an MLP. SoftMax function convert a vector of values into a probability distribution of values varying from (0,1) that helps the model predict how close it got the correct answer. The sum of all the values of the vector on which SoftMax is applied summates to 1 as it makes it a probability distribution.
+
+[Q11] What are loss functions and why do we need them?
+Ans] Loss functions are certain functions which calculate the difference of the models prediction to the actual value/label assigned the values are a vector and if the values are large this means the model is inaccurate. The loss function helps the user the access how accurate our model is and also helps in nudging the weights and biases to improve accuracy.
+
+[Q12] What does the output choice we have here mean? It's an array of 10 elements per image, but why?
+Ans] As our model as to predict which of the ten classes of fashion our given image could be our output layer is an array of 10 elements per image which contains the probability distribution of each class and the class having highest probability is the class which the model has predicted.
+
+[Q13] Why are we subtracting the mean of the inputs?
+Ans] Subtracting the mean of all the inputs from the input itself is a method used for normalisation of all the values to be centered around zero which helps to train faster and the weights are nudged evenly because of evenly spread out inputs.
+
+[Q14] Why are we using the softmax function here?
+Ans] We are already passed the hidden layer as we are now gonna pass the output layer containing the ten classes from which the model had to predict we use SoftMax as it converts it into a probability distribution to see what class the model has predicted and to calculate the loss function for nudging the weights.
+
+[Q15] Why are we doing a forward pass here instead of just using the outputs from the forward function?
+Ans] We are using forward pass in the backprop function as well even though we had already made a forward function as the function only returns the last output layer containing the probability of all the 10 classes but in backprop we also require the activations of the hidden layer which is not being returned so it is preferred to use forward in backprop as well.
+
+[Q16] What is the validation dataset and what do we mean by generalization?
+Ans] A validation dataset is the dataset utilised during the time of training to train the model on unseen data to check if it is not memorizing patterns and to also modify some parameters like the learning rate.
+Generalisation means how well can the model predict on data other than that used for testing(unseen data) to check if the model is not memorizing but actually identifying patterns.
+
+[Q17] What are the parameters in the model and what do they mean?
+Ans] Parameters are some arguments which are required to train the model, the parameters used in the given model are:
+     input_neurons :neurons given as input for forward pass
+     hidden_nuerons :neurons present in the hidden layer 
+     output neurons :neurons containing all ten classes for output
+     learning_rate: the rate at which the gradient is adjusted 
+     epochs :number of times the model is run once again through backprop for better accuracy
+
+[Q18] Why are we using argmax here? Why is this output different from the output of the model?
+Ans] Here our output layer is a array of probability distribution of ten classes thus to get a proper result of what class was predicted by our model the argmax function gives the label/index class having highest probability. Thus if the third class has highest probability output will be the label 3.
+     
+
+
